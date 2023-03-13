@@ -8,6 +8,46 @@ const authorAlert = document.querySelector("#author-alert");
 const titleAlert = document.querySelector("#title-alert");
 const pageAlert = document.querySelector("#page-alert");
 
+let myLibrary = [];
+
+function Book(author, title, page){
+    this.author = author;
+    this.title = title;
+    this.page = page;
+}
+
+
+function displayABook(book){
+
+    var cardDiv = document.createElement("div");
+    var authorDiv = document.createElement("div");
+    var titleDiv = document.createElement("div");
+    var pageDiv = document.createElement("div");
+
+    cardDiv.className = "card"
+    authorDiv.innerHTML = "Author: " + book.author;
+    titleDiv.innerHTML = "Title: " + book.title;
+    pageDiv.innerHTML = "Page: " + book.page;
+
+    cardDiv.appendChild(authorDiv);
+    cardDiv.appendChild(titleDiv);
+    cardDiv.appendChild(pageDiv);
+
+    cardsContainer.appendChild(cardDiv);
+
+}
+
+function displayAllBooks(library){
+    if(library){
+       library.forEach((book) => {
+            displayABook(book);
+       });
+    }
+}
+
+
+displayAllBooks(myLibrary);
+
 const handleAddBook = (event) => {
     if(!inputs[0].value){
         authorAlert.innerHTML = "Please enter a valid name!"
@@ -25,21 +65,9 @@ const handleAddBook = (event) => {
         pageAlert.innerHTML = "" 
     }
     if(inputs[0].value && inputs[1].value && inputs[1].value && !isNaN(inputs[2].value)){
-        var cardDiv = document.createElement("div");
-        var authorDiv = document.createElement("div");
-        var titleDiv = document.createElement("div");
-        var pageDiv = document.createElement("div");
-
-        cardDiv.className = "card"
-        authorDiv.innerHTML = "Author: " + inputs[0].value;
-        titleDiv.innerHTML = "Title: " + inputs[1].value;
-        pageDiv.innerHTML = "Page: " + inputs[2].value;
-
-        cardDiv.appendChild(authorDiv);
-        cardDiv.appendChild(titleDiv);
-        cardDiv.appendChild(pageDiv);
-
-        cardsContainer.appendChild(cardDiv);
+        let newBook = new Book(inputs[0].value, inputs[1].value, inputs[2].value);
+        myLibrary.push(newBook);
+        displayABook(newBook);
         popUpForm.style.display = "none";
     }
     
